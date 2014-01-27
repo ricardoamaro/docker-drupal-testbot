@@ -43,6 +43,15 @@ phing install -Dapp.installUrl='core/install.php?langcode=en&profile=testing'
 # We now want to ensure the "Testing" moudle is enabled.
 phing enable:simpletest
 
+# Show the environment variables for debugging.
+echo "##################################################"
+echo ""
+echo "These are environment variables we need to know "
+echo "for debugging."
+echo ""
+echo "CONCURRENCY: $CONCURRENCY"
+echo ""
+echo "##################################################"
+
 # Run the test suite.
 sudo -u www-data -H sh -c "export TERM=linux && cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --all --concurrency $CONCURRENCY --xml '/var/www/results'"
- 

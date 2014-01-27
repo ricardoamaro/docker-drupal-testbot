@@ -38,6 +38,9 @@ composer install
 # @todo, don't use the URL.
 phing install -Dapp.installUrl='core/install.php?langcode=en&profile=testing'
 
+# We now want to ensure the "Testing" moudle is enabled.
+phing enable:simpletest
+
 # Run the test suite.
 sudo -u www-data -H sh -c "cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --all"
  

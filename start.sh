@@ -26,6 +26,11 @@ mkdir /var/www/sites/default/private
 chmod -R 777 /var/www/sites/default/files
 chmod -R 777 /var/www/sites/default/private
 
+# Setup a directory to output the build results.
+rm -fR /var/www/results
+mkdir /var/www/results
+chmod -R 777 /var/www/results
+
 # Setup the installer.
 cd ~
 git clone https://github.com/nickschuch/phing-drupal-install.git drupal-install
@@ -39,5 +44,5 @@ phing install -Dapp.installUrl='core/install.php?langcode=en&profile=testing'
 phing enable:simpletest
 
 # Run the test suite.
-sudo -u www-data -H sh -c "cd /var/www && export TERM=linux php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --all"
+sudo -u www-data -H sh -c "export TERM=linux && cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --all --concurrency 2 --xml '/var/www/results'"
  

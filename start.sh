@@ -25,7 +25,6 @@ mkdir /var/www/sites/default/files
 mkdir /var/www/sites/default/private
 chmod -R 777 /var/www/sites/default/files
 chmod -R 777 /var/www/sites/default/private
-chown -R www-data:www-data /var/www
 
 ls -l /etc/apache2/sites-available/
 cat /etc/apache2/sites-available/default

@@ -44,5 +44,5 @@ phing install -Dapp.installUrl='core/install.php?langcode=en&profile=testing'
 phing enable:simpletest
 
 # Run the test suite.
-sudo -u www-data -H sh -c "export TERM=linux && cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --all --concurrency 2 --xml '/var/www/results'"
+sudo -u www-data -H sh -c "export TERM=linux && cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --all --concurrency $CONCURRENCY --xml '/var/www/results'"
  

@@ -4,6 +4,9 @@ MAINTAINER Nick Schuch <nick@previousnext.com.au>
 # APT.
 RUN apt-get update
 RUN apt-get -y upgrade
+
+RUN aptitude search apc
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install php-pear git curl wget mysql-client mysql-server apache2 libapache2-mod-php5 php5-curl pwgen python-setuptools vim-tiny php5-mysql openssh-server sudo php5-gd php-apc
 
 # Composer.

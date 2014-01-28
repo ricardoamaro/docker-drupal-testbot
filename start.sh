@@ -52,8 +52,9 @@ echo "These are environment variables we need to know "
 echo "for debugging."
 echo ""
 echo "CONCURRENCY: $CONCURRENCY"
+echo "GROUPS: $GROUPS"
 echo ""
 echo "##################################################"
 
 # Run the test suite.
-sudo -u www-data -H sh -c "export TERM=linux && cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --all --concurrency $CONCURRENCY --xml '/var/www/results'"
+sudo -u www-data -H sh -c "export TERM=linux && cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --concurrency $CONCURRENCY --xml '/var/www/results' '$GROUPS'"

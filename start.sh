@@ -5,13 +5,15 @@
 sleep 10s
 mysqladmin -u root password drupal
 mysql -uroot -pdrupal -e "CREATE DATABASE drupal; GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'localhost' IDENTIFIED BY 'drupal'; FLUSH PRIVILEGES;"
+mysql -uroot -pdrupal -e "SET GLOBAL innodb_fast_shutdown=0;"
+killall mysqld
 
 # Start apache.
 a2enmod rewrite
-apachectl start
 
-#supervisord -n &
-#sleep 10s
+# Start the supervisor process.
+supervisord -n &
+sleep 10s
 
 # Setup Drupal.
 cd /var/www

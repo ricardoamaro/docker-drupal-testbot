@@ -9,6 +9,7 @@ RUN pear channel-discover pear.phing.info
 RUN pear install phing/phing
 RUN easy_install supervisor
 ADD ./vhost.conf /etc/apache2/sites-available/default
+ADD ./my.cnf /etc/mysql/my.cnf
 ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./supervisord.conf /etc/supervisord.conf

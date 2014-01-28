@@ -19,4 +19,6 @@ RUN chmod 755 /start.sh
 RUN chmod 755 /etc/apache2/foreground.sh
 RUN mkdir /var/log/supervisor/
 RUN mkdir /var/run/sshd
+RUN git clone https://github.com/nickschuch/phing-drupal-install.git /root/drupal-install
+RUN cd /root/drupal-install && composer install
 CMD ["/bin/bash", "/start.sh"]

@@ -6,14 +6,15 @@ sleep 10s
 mysqladmin -u root password drupal
 mysql -uroot -pdrupal -e "CREATE DATABASE drupal; GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'localhost' IDENTIFIED BY 'drupal'; FLUSH PRIVILEGES;"
 mysql -uroot -pdrupal -e "SET GLOBAL innodb_fast_shutdown=0;"
+
+# Restart mysqld properly.
 killall mysqld
+/usr/sbin/mysqld &
+sleep 10s
 
 # Start apache.
 a2enmod rewrite
-
-# Start the supervisor process.
-supervisord -n &
-sleep 10s
+apachectl start
 
 # Setup Drupal.
 cd /var/www
@@ -33,17 +34,9 @@ rm -fR /var/www/results
 mkdir /var/www/results
 chmod -R 777 /var/www/results
 
-# Setup the installer.
-cd ~
-git clone https://github.com/nickschuch/phing-drupal-install.git drupal-install
-cd drupal-install
-composer install
-# We skip a few steps in the install process.
-# @todo, don't use the URL.
-phing install -Dapp.installUrl='core/install.php?langcode=en&profile=testing'
-
-# We now want to ensure the "Testing" moudle is enabled.
-phing enable:simpletest
+# Install the site. Enable Simpletest.
+cd /root/drupal-install && phing install -Dapp.installUrl='core/install.php?langcode=en&profile=testing'
+cd /root/drupal-install && phing enable:simpletest
 
 # Show the environment variables for debugging.
 echo "##################################################"
@@ -57,4 +50,4 @@ echo ""
 echo "##################################################"
 
 # Run the test suite.
-sudo -u www-data -H sh -c "export TERM=linux && cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --concurrency $CONCURRENCY --xml '/var/www/results' '$GROUPS'"
+sudo -E -u www-data -H sh -c "export TERM=linux && cd /var/www && php ./core/scripts/run-tests.sh --php `which php` --url 'http://localhost' --color --concurrency $CONCURRENCY --xml '/var/www/results' '$GROUPS'"

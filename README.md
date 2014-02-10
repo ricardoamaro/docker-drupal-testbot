@@ -32,7 +32,7 @@ sudo docker images
 sudo docker rmi {imageID}
 ```
 
-### Clean up
+### Clean up all 
 While i am developing i use this to rm all old instances
 ```
 sudo docker ps -a | awk '{print $1}' | xargs -n1 -I {} sudo docker rm {}

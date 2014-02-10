@@ -11,7 +11,7 @@ RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -s /bin/true /sbin/initctl
 
 # Packages.
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git curl wget mysql-client mysql-server apache2 libapache2-mod-php5 php5-curl pwgen python-setuptools vim-tiny php5-mysql openssh-server sudo php5-gd php-apc php-pear
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git curl wget mysql-client mysql-server apache2 libapache2-mod-php5 php5-curl pwgen python-setuptools vim-tiny php5-mysql openssh-server sudo php5-gd php-apc php-pear drush
 
 # Composer.
 RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin
@@ -29,6 +29,10 @@ ADD ./conf/php5/apc.ini /etc/php5/conf.d/apc.ini
 
 # Mysql.
 ADD ./conf/mysql/my.cnf /etc/mysql/my.cnf
+
+# Retrieve latest drupal 
+RUN rm -rf /var/www/ ; cd /var ; drush dl drupal ; mv /var/drupal*/ /var/www/
+RUN chmod a+w /var/www/sites/default ; mkdir /var/www/sites/default/files ; chown -R www-data:www-data /var/www/
 
 # Scripts.
 ADD ./conf/scripts/start.sh /start.sh

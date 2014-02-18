@@ -13,7 +13,7 @@ if [ "$IMAGE" == "" ]; then
 fi
 
 CONTAINER=$(sudo docker run -i -d ${NAME} | tail -n1)
-echo ${CONTAINER}
+echo "Container: ${CONTAINER} started"
 sleep 30
 sudo docker logs ${CONTAINER}
 

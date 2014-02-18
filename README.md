@@ -22,14 +22,16 @@ cd docker-drupal-testbot
 ./test.sh
 ```
 This will check if you already created the testbot docker image.
-Then it will the tests after creating the image or just use the existing one.
+
+It will start the tests after creating the image or just use the existing container.
 
 
 Note: the latest Drupal version will be added each time you create the image.
-If you need to remove the old image just run:
+If you need to remove the old image to update Drupal just run this sequence:
 ```
-sudo docker images
+sudo docker images | grep "${USER}/drupaltestbot"
 sudo docker rmi {imageID}
+./test.sh
 ```
 
 ### Clean up all 

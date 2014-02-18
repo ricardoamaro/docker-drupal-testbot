@@ -8,10 +8,10 @@ RUN apt-get -y upgrade
 
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
-RUN ln -s /bin/true /sbin/initctl
+RUN ln -sf /bin/true /sbin/initctl
 
 # Packages.
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git curl wget mysql-client mysql-server apache2 libapache2-mod-php5 php5-curl pwgen python-setuptools vim-tiny php5-mysql openssh-server sudo php5-gd php-apc php-pear drush
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 curl drush git libapache2-mod-php5 mc memcached mysql-client mysql-server openssh-server php5-curl php5-gd php5-memcache php5-mysql php-apc php-pear pwgen python-setuptools sudo vim-tiny wget
 RUN DEBIAN_FRONTEND=noninteractive apt-get autoclean
 
 # Composer.

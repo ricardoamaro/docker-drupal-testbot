@@ -12,6 +12,7 @@ RUN ln -s /bin/true /sbin/initctl
 
 # Packages.
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git curl wget mysql-client mysql-server apache2 libapache2-mod-php5 php5-curl pwgen python-setuptools vim-tiny php5-mysql openssh-server sudo php5-gd php-apc php-pear drush
+RUN DEBIAN_FRONTEND=noninteractive apt-get autoclean
 
 # Composer.
 RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin
